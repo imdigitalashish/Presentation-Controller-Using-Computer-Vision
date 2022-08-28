@@ -1,13 +1,12 @@
 import os
 import cv2
 from cvzone.HandTrackingModule import HandDetector
-from pyparsing import anyOpenTag
 
 
 width, height = 1280, 720
 folderPath = "presentation"
 # Camera setup
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(2)
 cap.set(3, width)
 cap.set(4 ,height)
 
@@ -30,6 +29,8 @@ annotationNumber = -1
 annotationStart = False
 
 
+scalingFactor = 1.5
+
 while True:
     success, img = cap.read()
     img = cv2.flip(img, 1)
@@ -47,7 +48,7 @@ while True:
         cx, cy = hand['center']
 
         lmList = hand["lmList"] # Finger landmark
-        indexFinger = lmList[8][0], lmList[8][1]
+        indexFinger = round(lmList[8][0] *scalingFactor * 2), round(lmList[8][1] * scalingFactor)
 
 
         # print(fingers)
